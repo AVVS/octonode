@@ -158,6 +158,15 @@ class Repo
     @client.get "/repos/#{@name}/stargazers", page, per_page, (err, s, b, headers) ->
       return cb(err) if err
       if s isnt 200 then cb(new Error("Repo stargazers error")) else cb null, b, headers
+  
+  # List Events 
+  # '/repos/:owner/:repo/events' GET
+  # - page, optional     - params[0]
+  events: (params..., cb)->
+    page     = params[0] || 1    
+    @client.get "/repos/#{@name}/events", page, (err, s, b, headers) ->
+      return cb(err) if err
+      if s isnt 200 then cb(new Error("Repo activity error")) else cb null, b, headers
     
 
 # Export module
